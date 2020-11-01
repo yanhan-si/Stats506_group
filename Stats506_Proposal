@@ -2,15 +2,35 @@ Stats506 Proposal
 
 Hao He, Ran Yan, Yanhan Si
 
-Regression Related Topics
+Topics:
+Regression related topics - Hosmer-Lemeshow test for model calibration
 
-- Estimating linear or non-linear combinations of regression coefficients (including standard errors).
-
-- GLM with/without random effect
-
-Plan for collaboration:
-- Finish Proposal and decide dataset(8pm. 10/31 Sat)
-- Meeting every Friday at 8pm.
+Datasets & Variable of interest:
+We are going to use logistic regression to predict whether the user will churn or not and use the Hosmer-Lemeshow test to study the performance of models.
+Dataset can be found at：https://www.kaggle.com/shrutimechlearn/churn-modelling?select=Churn_Modelling.csv
+Specific variables that will be used:CreditScore, Gender, Age, Tenure, Balance, NumOfProducts, HasCrCard,IsActiveMember, EstimateSalary
 
 
+
+
+Core commands/packages:
+For STATA:
+logistic 
+estat gof
+ 
+For Python:
+numpy 
+pandas 
+Core functions:
+np.mean, np.sum, np.array,pd.DataFrame,
+
+For R:
+Resource Selection
+glm
+generalhoslem
+
+Responsibilities:
 Computing language: R(Yanhan Si), Stata(Hao He), Python(Ran Yan)
+
+
+
