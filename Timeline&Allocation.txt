@@ -1,0 +1,29 @@
+-Introduction
+
+`Describe your topic and explain when or why it is useful.
+`Explain any key concepts related to your topic.
+`Describe the data you will use for the examples.
+`Discuss the software/tools you will use for the examples.
+
+-Core Example
+
+`Fit a logistic model with churn data
+`Perform HL test for the logistic model
+`Creat a HL plot
+`Interpret the result
+`Compare to a likelihood base approach(AIC)
+
+-Conclusion
+
+`Explain the potential difference between the output of different softwares
+
+Allocation of tasks: 
+Introduction(Hao, I prefer to do this)
+Conclusion
+Aggregation(.rmd file that put all things together)
+
+Due date:
+Intro - 7:00 pm. 11/11 Wed
+Individual examples - 7:00 pm. 11/12 Thur
+Conclusion - 11:59 pm. 11/12 Thur
+Aggregation - 3:00 pm. 11/13 Fri
