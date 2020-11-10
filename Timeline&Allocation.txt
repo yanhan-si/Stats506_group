@@ -31,6 +31,7 @@ Conclusion - 5:00 pm. 11/13 Fri
 
 Notes for communication:
 Hao: Some suggestions for data cleaning:
+ - Throw out all missing values and select only customer with age 18-60.
  - Credit score: Divide to four groups: Below 600, 600-650, 650-700, 700+
  - Age: divide to three groups 18-32 , 33-46, 47-60
  - Balance: divide to four groups 0-50000, 50000-100000, 100000-150000, 150000+
