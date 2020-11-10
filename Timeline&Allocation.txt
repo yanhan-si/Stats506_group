@@ -19,11 +19,12 @@
 
 Allocation of tasks: 
 Introduction(Hao, I prefer to do this)
-Conclusion
-Aggregation(.rmd file that put all things together)
+Aggregation(Yanhan Si)
+Conclusion(Both of us)
 
 Due date:
-Intro - 7:00 pm. 11/11 Wed
-Individual examples - 7:00 pm. 11/12 Thur
-Conclusion - 11:59 pm. 11/12 Thur
+Meeting - 3:30 pm. 11/11 Wed
+Intro - 11:59 pm. 11/11 Wed
+Individual examples - 11:59 pm. 11/12 Thur
 Aggregation - 3:00 pm. 11/13 Fri
+Conclusion - 5:00 pm. 11/13 Fri
