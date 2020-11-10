@@ -18,7 +18,7 @@
 `Explain the potential difference between the output of different softwares
 
 Allocation of tasks: 
-Introduction(Hao, I prefer to do this)
+Introduction(Hao)
 Aggregation(Yanhan Si)
 Conclusion(Both of us)
 
@@ -28,3 +28,11 @@ Intro - 11:59 pm. 11/11 Wed
 Individual examples - 11:59 pm. 11/12 Thur
 Aggregation - 3:00 pm. 11/13 Fri
 Conclusion - 5:00 pm. 11/13 Fri
+
+Notes for communication:
+Hao: Some suggestions for data cleaning:
+ - Credit score: Divide to four groups: Below 600, 600-650, 650-700, 700+
+ - Age: divide to three groups 18-32 , 33-46, 47-60
+ - Balance: divide to four groups 0-50000, 50000-100000, 100000-150000, 150000+
+ - Estimated Salary: divide to five groups 0-40k, 40-80k, 80-120k, 120-160k, 160k+
+ 
