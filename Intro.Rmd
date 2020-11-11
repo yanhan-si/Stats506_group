@@ -45,7 +45,7 @@ across subgroups, which indicates a good fit model.
 
 ### Data Description
 We will use the bank churn data available on Kaggle([ Data Source](https://www.kaggle.com/shrutimechlearn/churn-modelling)).
-The data contains 10000 observations of 14 variables. For simplicity, we only
+The data contains 10000 observations of 14 variables of which 2000 are postivie observations. For simplicity, we only
 construct the logistic model using the variables below:  
 `Credit Score`: The credit score of the customer, ranging from 350 to 850  
 `Geography`: The country where the customer belongs. There are only three
