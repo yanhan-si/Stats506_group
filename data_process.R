@@ -1,10 +1,12 @@
 # This script is used to process the raw dataset
 library(tidyverse)
 library(readr)
-
-data = read_csv("Churn_Modelling.csv")
+path = "./data"
+file_name = sprintf('%s/Churn_Modelling.csv', path)
+out_file_name = sprintf('%s/Churn_Modelling_Cleaned.csv', path)
+data = read_csv(file_name)
 names(data)
 data = data %>% select(-RowNumber,-CustomerId,-Surname)
 data[!complete.cases(data),]
 head(data)
-write_csv(data, "Churn_Modelling_Cleaned.csv")
+write_csv(data, out_file_name)
