@@ -1,0 +1,155 @@
+----------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  Z:\mtproject.log
+  log type:  text
+ opened on:  11 Nov 2020, 20:11:05
+
+. 
+. // load data: ------------------------------------------------------------
+> --- *
+. import delimited Churn_Modelling_Cleaned.csv
+(11 vars, 10,000 obs)
+
+. save churn_data.dta, replace
+file churn_data.dta saved
+
+. clear
+
+. 
+. // fit a logistic model using all the variables
+. use churn_data
+
+. encode geography, gen(geo)
+
+. encode gender, gen(sex)
+
+. logit exited creditscore i.geo i.sex age tenure balance numofproducts i.ha
+> scrcard i.isactivemember estimatedsalary
+
+Iteration 0:   log likelihood = -5054.8913  
+Iteration 1:   log likelihood =  -4331.648  
+Iteration 2:   log likelihood =  -4280.834  
+Iteration 3:   log likelihood = -4280.6777  
+Iteration 4:   log likelihood = -4280.6777  
+
+Logistic regression                             Number of obs     =     10,0
+> 00
+                                                LR chi2(11)       =    1548.
+> 43
+                                                Prob > chi2       =     0.00
+> 00
+Log likelihood = -4280.6777                     Pseudo R2         =     0.15
+> 32
+
+----------------------------------------------------------------------------------
+          exited |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-----------------+----------------------------------------------------------------
+     creditscore |  -.0006683   .0002803    -2.38   0.017    -.0012178   -.0001189
+                 |
+             geo |
+        Germany  |   .7747144    .067674    11.45   0.000     .6420758     .907353
+          Spain  |   .0352178   .0706379     0.50   0.618      -.10323    .1736656
+                 |
+             sex |
+           Male  |  -.5284828   .0544884    -9.70   0.000     -.635278   -.4216875
+             age |    .072706   .0025755    28.23   0.000     .0676581    .0777539
+          tenure |  -.0159491   .0093549    -1.70   0.088    -.0342843    .0023861
+         balance |   2.64e-06   5.14e-07     5.13   0.000     1.63e-06    3.64e-06
+   numofproducts |  -.1015227   .0471342    -2.15   0.031     -.193904   -.0091413
+     1.hascrcard |  -.0446764   .0593395    -0.75   0.452    -.1609797    .0716269
+1.isactivemember |  -1.075444   .0576856   -18.64   0.000    -1.188506    -.962382
+ estimatedsalary |   4.81e-07   4.74e-07     1.01   0.310    -4.48e-07    1.41e-06
+           _cons |  -3.392281   .2448081   -13.86   0.000    -3.872096   -2.912466
+----------------------------------------------------------------------------------
+
+. 
+. // stall packages to help performing hl test
+. net from https://www.sealedenvelope.com/
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+https://www.sealedenvelope.com/
+Programs from Sealed Envelope Ltd
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+These programs are provided by Sealed Envelope Ltd.
+For more details on their use visit www.sealedenvelope.com
+
+PACKAGES you could -net describe-:
+    hl                Hosmer-Lemeshow goodness of fit test
+    mlogplot2         Extension to mlogplot to handle two-way interaction terms in mlogit
+    reformat          Reformat regression output
+    rescale           Rescale categorical variables using numbers found in value labels
+    time              Convert strings in HH:MM:SS format to elapsed times and back again
+    xcount            Count longitudinal data
+    xfill             Fill in static variables in longitudinal data
+    xtab              Tabulate longitudinal data
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+. net describe hl
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+package hl from https://www.sealedenvelope.com
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+TITLE
+      Hosmer-Lemeshow goodness of fit test
+
+DESCRIPTION/AUTHOR(S)
+      Calculate the Hosmer-Lemeshow C or H goodness of fit statistics for
+      binary outcomes after logistic or probit regression or using external
+      predictions. Optionally produce calibration plots.
+      
+      Author: Gareth Ambler, UCL.
+      Distribution-Date: 25oct2012
+
+INSTALLATION FILES                                   (type net install hl)
+      stata/hl.ado
+      stata/hl.hlp
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+. net install hl
+checking hl consistency and verifying not already installed...
+installing into C:\Users\hhaohe\ado\plus\...
+installation complete.
+
+. 
+. // perform an initial HL-test and generate HL plot
+. predict p_exited
+(option pr assumed; Pr(exited))
+
+. hl exited p_exited, plot
+ Group         N      Obs (%)        Exp (%)     Min %     Max %        HL
+     1      1000     36 (3.6)     34.6 (3.5)       1.1       4.7      0.06
+     2      1000     62 (6.2)     58.5 (5.9)       4.7       6.9      0.22
+     3      1000     76 (7.6)     81.3 (8.1)       7.0       9.4      0.37
+     4      1000    107 (10.7)    108.0 (10.8)     9.4      12.2      0.01
+     5      1000    117 (11.7)    137.4 (13.7)    12.2      15.3      3.53
+     6      1000    186 (18.6)    172.4 (17.2)    15.3      19.3      1.29
+     7      1000    207 (20.7)    216.2 (21.6)    19.3      24.3      0.50
+     8      1000    276 (27.6)    276.5 (27.7)    24.3      31.5      0.00
+     9      1000    415 (41.5)    374.2 (37.4)    31.5      44.3      7.11
+    10      1000    555 (55.5)    577.8 (57.8)    44.3      93.1      2.14
+ Total      10000  2037 (20.4)    2037.0 (20.4)    1.1      93.1     15.22
+
+       number of observations =     10000
+             number of groups =        10
+      Hosmer-Lemeshow chi2(10) =        15.22
+                  Prob > chi2 =         0.1242
+
+. 
+. // Try AIC 
+. 
+. 
+. // Reference: https://www.sealedenvelope.com/stata/hl/
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. log close
+      name:  <unnamed>
+       log:  Z:\mtproject.log
+  log type:  text
+ closed on:  11 Nov 2020, 20:12:24
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
