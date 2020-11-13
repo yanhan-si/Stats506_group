@@ -61,7 +61,39 @@ the bank or not.
 `EstimatedSalary`: Estimated salary of the customer in Dollars.  
 `Exited`: The response variable indicated whether the customer churn or not. 1
 means customer exited and 0 means retained.
- 
+
+# Data Visualization
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(readr)
+# data: -----------------------------------------------------------------------
+path = "./data"
+file_name = sprintf('%s/Churn_Modelling_Cleaned.csv', path)
+data = read_csv(file_name)
+# factoring: ------------------------------------------------------------------
+names(data)
+data = data %>% mutate(Exited = as.factor(Exited),
+                       HasCrCard = as.factor(HasCrCard),
+                       IsActiveMember = as.factor(IsActiveMember))
+summary(data)
+head(data)
+data %>% ggplot(aes( CreditScore,color = Exited )) + geom_density()
+```
+
+```{r}
+data %>% ggplot(aes(x = Exited, y = Age, color = Gender)) + geom_boxplot()
+```
+
+```{r}
+data %>% ggplot(aes(x = Geography, y = Exited)) + geom_count()
+```
+
+```{r}
+data %>% ggplot(aes(x = Exited, y = HasCrCard, color = Gender)) +geom_count()
+```
+
 
 # References
 [Logistic Model](https://en.wikipedia.org/wiki/Logistic_regression)  
