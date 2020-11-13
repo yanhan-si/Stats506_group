@@ -68,6 +68,7 @@ means customer exited and 0 means retained.
 library(tidyverse)
 library(ggplot2)
 library(readr)
+library(ResourceSelection)
 # data: -----------------------------------------------------------------------
 path = "./data"
 file_name = sprintf('%s/Churn_Modelling_Cleaned.csv', path)
@@ -93,6 +94,20 @@ data %>% ggplot(aes(x = Geography, y = Exited)) + geom_count()
 ```{r}
 data %>% ggplot(aes(x = Exited, y = HasCrCard, color = Gender)) +geom_count()
 ```
+
+
+# Model fitting
+```{r}
+data = data %>% mutate(Exited = as.factor(Exited),
+                       HasCrCard = as.factor(HasCrCard),
+                       IsActiveMember = as.factor(IsActiveMember))
+# modeling: -------------------------------------------------------------------
+model1 = glm(Exited ~ ., data = data, family = binomial(link="logit"))
+summary(model1)
+# Hosmer-Lemeshow Goodness of Fit Test: ---------------------------------------
+hoslem.test(model1$y, model1$fitted.values, g = 10)
+```
+
 
 
 # References
