@@ -57,6 +57,19 @@ the bank or not.
 `Exited`: The response variable indicated whether the customer churn or not. 1
 means customer exited and 0 means retained.
 
+### Data Visualization  
+The distribution of credit score by the exited status  
+![](./fig/CreditScore.png)
+
+Age + Gender ~ Exited  
+![](./fig/Age_exited.png)
+
+Geography ~ Exited  
+![](./fig/Geography.png)
+
+HasCrCard ~ Exited  
+![](./fig/HasCrCard.png)
+
 ### References
 [Logistic Model](https://en.wikipedia.org/wiki/Logistic_regression)  
 [Hosmer-Lemeshow Test](https://en.wikipedia.org/wiki/Hosmer%E2%80%93Lemeshow_test#Pearson_chi-squared_goodness_of_fit_test)
