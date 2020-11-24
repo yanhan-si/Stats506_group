@@ -2,13 +2,60 @@
 title: "Stats 506 Midterm Project: Hosmer-Lemeshow Model Calibration"
 author: "Group 5: Hao He, Yanhan Si"
 date: "`r format.Date(Sys.Date(), '%B %d, %Y')`"
-output: html_document
-     
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    highlight: tango
 ---
 
-```{r setup, include=FALSE}
+```{css, include = TRUE, echo = FALSE}
+body{ /* Normal */
+  font-size: 15px;
+}
+td{ /* Table  */
+  font-size: 14px;
+}
+#TOC{ /* Table of contents */
+  font-size: 16px;
+}
+h2{ /* Header 2 */
+  font-size: 28px;
+}
+h3{ /* Header 3 */
+  font-size: 22px;
+}
+h5{ /* Header 5 */
+  font-size: 18px;
+  text-decoration: underline;
+}
+h6{ /* Header 6 */
+  font-size: 16px;
+  font-weight: bold;
+}
+.highlight{ /* Highlighted Text */
+  background-color: #d8e8e8;
+}
+span.math{ /* Formulas */
+  font-size: 13px;
+}
+blockquote {
+  font-size: 15px;
+}
+pre { /* Scrollable code block */
+  max-height: 300px;
+  overflow-y: auto;
+}
+.plotly{ /* Figures generated with plotly - align center */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+```
+
+```{r setup, include=TRUE}
 # 79: -------------------------------------------------------------------------
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Introduction
@@ -114,7 +161,7 @@ data %>% ggplot(aes(x = Exited, y = HasCrCard, color = Gender)) +geom_count()
 
 ## R part
 
-```{r}
+```{r,  class.source = "fold-hide"}
 data = data %>% mutate(Exited = as.factor(Exited),
                        HasCrCard = as.factor(HasCrCard),
                        IsActiveMember = as.factor(IsActiveMember))
