@@ -1,6 +1,6 @@
 ---
 title: "Stats 506 Midterm Project: Hosmer-Lemeshow Model Calibration"
-author: "Group 5: Hao He, Yanhan Si"
+author: "Hao He, Yanhan Si"
 date: "`r format.Date(Sys.Date(), '%B %d, %Y')`"
 output: 
   html_document:
@@ -56,6 +56,11 @@ pre { /* Scrollable code block */
 ```{r setup, include=TRUE}
 # 79: -------------------------------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(tidyverse)
+library(ggplot2)
+library(readr)
+library(ResourceSelection)
 ```
 
 # Introduction
@@ -91,31 +96,42 @@ null hypothesis is that the observed and expected proportions are the same
 across subgroups, which indicates a good fit model.
 
 ## Data Description
-We will use the bank churn data available on Kaggle([ Data Source](https://www.kaggle.com/shrutimechlearn/churn-modelling)).
-The data contains 10000 observations of 14 variables of which 2000 are postivie observations. For simplicity, we only
-construct the logistic model using the variables below:  
-`Credit Score`: The credit score of the customer, ranging from 350 to 850  
-`Geography`: The country where the customer belongs. There are only three
-countries in our case, which are Germany, France and Spain.  
-`Gender`: Gender  
-`Age`: Age   
-`Tenure`: Number of years for which the customer has been with the bank  
-`Balance`: Bank balance of the customer  
-`HasCrCard`: Binary Flag for whether the customer holds a credit card with the
+
+We will use the bank churn data available from Kaggle([ Data Source](https://www.kaggle.com/shrutimechlearn/churn-modelling)).
+The data contains 10000 observations of 14 variables of which 2000 are positive observations. For simplicity, we only construct the logistic model using the variables below: 
+
+* `Credit Score`: The credit score of the customer, ranging from 350 to 850.  
+
+* `Geography`: The country where the customer belongs, including Germany, France and Spain.  
+
+* `Gender`: Female or Male.
+
+* `Age`:  Age of the customer.
+
+* `Tenure`: Number of years for which the customer has been with the bank.  
+
+* `Balance`: Bank balance of the customer.  
+
+* `NumOfProducts`: Number of bank products the customer is utilising.
+
+* `HasCrCard`: Binary Flag for whether the customer holds a credit card with the
 bank or not.  
-`IsActiveMember`: Binary Flag for whether the customer is an active member with
+
+* `IsActiveMember`: Binary Flag for whether the customer is an active member with
 the bank or not.  
-`EstimatedSalary`: Estimated salary of the customer in Dollars.  
-`Exited`: The response variable indicated whether the customer churn or not. 1
+
+* `EstimatedSalary`: Estimated salary of the customer in Dollars. 
+
+* `Exited`: The response variable indicated whether the customer churn or not. 1
 means customer exited and 0 means retained.
+
+
+
 
 # Data Visualization
 
 ```{r message=FALSE, warning=FALSE}
-library(tidyverse)
-library(ggplot2)
-library(readr)
-library(ResourceSelection)
+
 # data: -----------------------------------------------------------------------
 path = "./data"
 file_name = sprintf('%s/Churn_Modelling_Cleaned.csv', path)
@@ -285,6 +301,11 @@ The logistic regression performed in R and Stata yield the same result. Hosmer a
 [Logistic Model](https://en.wikipedia.org/wiki/Logistic_regression)  
 [Hosmer-Lemeshow Test](https://en.wikipedia.org/wiki/Hosmer%E2%80%93Lemeshow_test#Pearson_chi-squared_goodness_of_fit_test)
 
+Some of the html format code was adopted from the source code of the project of group 2 (EunSeon Ahn et al.) 
+
+# Acknowledgments
+
+We thank EunSeon Ahn and Erin Susan Cikanek for helpful and constructive feedback.
 
 
 
