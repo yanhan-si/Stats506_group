@@ -56,11 +56,6 @@ pre { /* Scrollable code block */
 ```{r setup, include=TRUE}
 # 79: -------------------------------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
-library(knitr)
-library(tidyverse)
-library(ggplot2)
-library(readr)
-library(ResourceSelection)
 ```
 
 # Introduction
@@ -131,46 +126,64 @@ means customer exited and 0 means retained.
 # Data Visualization
 
 ```{r message=FALSE, warning=FALSE}
+library(knitr)
+library(tidyverse)
+library(ggplot2)
+library(readr)
+library(ResourceSelection)
 
-# data: -----------------------------------------------------------------------
 path = "./data"
 file_name = sprintf('%s/Churn_Modelling_Cleaned.csv', path)
 data = read_csv(file_name)
-# factoring: ------------------------------------------------------------------
-#names(data)
+
 data = data %>% mutate(Exited = as.factor(Exited),
                        HasCrCard = as.factor(HasCrCard),
                        IsActiveMember = as.factor(IsActiveMember))
-#summary(data)
-#head(data)
-
 ```
 
-* Figure.1 The distribution of credit score by exited
+* Figure 1 shows the distribution of credit scores stratified by the response variable `Exited` status. There is no vast difference between these two groups in terms of the credit scores distribution.
 
 ```{r}
-data %>% ggplot(aes( CreditScore,color = Exited )) + geom_density()
-```
-
-
-* Figure.2 Age + Gender ~ Exited
-
-```{r}
-data %>% ggplot(aes(x = Exited, y = Age, color = Gender)) + geom_boxplot()
+data %>% 
+  ggplot(aes( CreditScore, color = Exited )) + 
+  geom_density() + 
+  ggtitle("Figure.1 The distribution of credit score by exited") +
+  theme_bw()
 ```
 
 
-* Figure.3 Geography ~ Exited
+* Figure 2 indicates that exited customers have a higher mean age than those retained. There is no significant difference in gender between the exited and retained groups.
 
 ```{r}
-data %>% ggplot(aes(x = Geography, y = Exited)) + geom_count()
+data %>% 
+  ggplot(aes(x = Exited, y = Age, color = Gender)) + 
+  geom_boxplot() + 
+  ggtitle("Figure.2 Age + Gender ~ Exited") +
+  theme_bw()
 ```
 
 
-* Figure.4 HasCrCard ~ Exited  
+* Figure 3 shows the geographic information of the customers. It seems that the proportion of churn is much higher in Germany than that in France.
 
 ```{r}
-data %>% ggplot(aes(x = Exited, y = HasCrCard, color = Gender)) +geom_count()
+data %>% 
+  ggplot(aes(x = Exited)) + 
+  geom_bar() + 
+  facet_grid(~ Geography) +
+  ggtitle("Figure.3 Geography ~ Exited") +
+  theme_bw()
+```
+
+
+* Female has a higher rate of churn in this data set.
+
+```{r}
+data %>% 
+  ggplot(aes(x = Exited)) +
+  geom_bar() + 
+  facet_grid(  ~ Gender) +
+  ggtitle("Figure.4 Gender ~ Exited") +
+  theme_bw()
 ```
 
 # Model fitting {.tabset}
