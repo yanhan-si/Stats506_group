@@ -187,7 +187,7 @@ data %>%
 
 # Model fitting {.tabset}
 
-## R {.tabset}
+## R 
 
 In this model fitting part, we will use logistic regression to predict the p
 
@@ -203,7 +203,7 @@ summary(model1)
 hoslem.test(model1$y, model1$fitted.values, g = 10)
 ```
 
-## Stata {.tabset}
+## Stata 
 
 ### Setup
 In Stata, there are built-in functions called
