@@ -54,7 +54,6 @@ pre { /* Scrollable code block */
 ```
 
 ```{r setup, include=TRUE}
-# 79: -------------------------------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -189,6 +188,8 @@ data %>%
 # Model fitting {.tabset}
 
 ## R {.tabset}
+
+In this model fitting part, we will use logistic regression to predict the p
 
 ### Setup
 ```{r  paged.print=TRUE}
