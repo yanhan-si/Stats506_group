@@ -68,7 +68,7 @@ test and create Hosmer-Lemeshow plot in **R** and **Stata**. Eventually we will
 compare the result to a likelihood based approach like AIC and explain the
 potential limitations with the HL test.
 
-### Logistic Regression Model
+## Logistic Regression Model
 
 Logistic regression is a statistical model that in its basic form uses a
 logistic function to model a binary response variable. In our example, the
@@ -76,7 +76,7 @@ response variable will be whether the customer churn or not. Let's denote the
 response variable to have value 0 or 1 in our case.
 The logistic model predicts $P(Y=1) = \frac{1}{1+exp(\beta'x)}$, so $P(Y=0) = \frac{exp(\beta'x)}{1+exp(\beta'x)}$.
 
-### Hosmer-Lemeshow Test
+## Hosmer-Lemeshow Test
 
 The Hosmer-Lemeshow Test assesses whether or not the observed event rates match
 expected event rates in subgroups of the model population. The Hosmer–Lemeshow
@@ -90,7 +90,7 @@ a $\chi ^{2}$ distribution with G − 2 degrees of freedom. For the HL test, the
 null hypothesis is that the observed and expected proportions are the same
 across subgroups, which indicates a good fit model.
 
-### Data Description
+## Data Description
 We will use the bank churn data available on Kaggle([ Data Source](https://www.kaggle.com/shrutimechlearn/churn-modelling)).
 The data contains 10000 observations of 14 variables of which 2000 are postivie observations. For simplicity, we only
 construct the logistic model using the variables below:  
@@ -157,11 +157,12 @@ data %>% ggplot(aes(x = Geography, y = Exited)) + geom_count()
 data %>% ggplot(aes(x = Exited, y = HasCrCard, color = Gender)) +geom_count()
 ```
 
-# Model fitting
+# Model fitting {.tabset}
 
-## R part
+## R {.tabset}
 
-```{r,  class.source = "fold-hide"}
+### Setup
+```{r  paged.print=TRUE}
 data = data %>% mutate(Exited = as.factor(Exited),
                        HasCrCard = as.factor(HasCrCard),
                        IsActiveMember = as.factor(IsActiveMember))
@@ -172,9 +173,9 @@ summary(model1)
 hoslem.test(model1$y, model1$fitted.values, g = 10)
 ```
 
-## Stata part
+## Stata {.tabset}
 
-## Setup
+### Setup
 In Stata, there are built-in functions called
 [lfit](https://stats.idre.ucla.edu/stata/webbooks/logistic/chapter3/lesson-3-logis
 tic-regression-diagnostics/) and [estat
@@ -189,7 +190,7 @@ net install hl
 
 ```
 
-## Loading data
+### Loading data
 ```
 import delimited Churn_Modelling_Cleaned.csv
 summarize
@@ -201,7 +202,7 @@ data
 
 ![](./fig/data_overview.PNG)  
 
-## Fitting logistic model
+### Fitting logistic model
 Before we fit an logistic model, we must notice that stata doesn't know how to 
 handle string variables for regression. One way to solve this is to use `encode`
 command. In our case, we use it to convert variables geography and gender.  
@@ -222,7 +223,7 @@ The result is presented below.
 
 ![](./fig/logit_model.PNG)
 
-## Hosmer-Lemeshow Test and calibration plot
+### Hosmer-Lemeshow Test and calibration plot
 
 For a HL test statistics, we can just use `lfit` or `estat gof` commands.
 In our case, we will use `hl` command that enables us to create calibration 
@@ -241,7 +242,7 @@ to reject null hypothesis, indicating the model is well fitted.
 The plot also shows that the observed value(bubbles) are well fitted on the
 line.
 
-## Compare with likelihood based approach(AIC)
+### Compare with likelihood based approach(AIC)
 We will try to use a likelihood based approach(AIC) and backward elimination 
 method to do variable selection. Then we will construct an optimized model and 
 compare the HL test result with the previous result. The `estat ic` command
@@ -270,11 +271,11 @@ We will first present the result.
 We can observe that the new statistics become 0.2164, which is an improved
 model and coincides with the AIC approach.
 
-## Brief Summary
+# Brief Summary
 
 The logistic regression performed in R and Stata yield the same result. Hosmer and Lemeshow goodness of fit also give the same result. This is what we expected as we used exactly the same model though different software.
 
-## Timeline
+# Timeline
 
 * Add more example and compare different models (Nov 20)
 
