@@ -61,11 +61,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 The purpose of this tutorial is to introduce the Hosmer-Lemeshow Test, which is
 a goodness of fit test for logistic regression models. We will first introduce
-the key concepts behind logistic regression models and the Hosmer-Lemeshow Test.
+the key concepts behind logistic regression models and the Hosmer-Lemeshow
+Test.
 Then we will use a bank churn data to illustrate how to perform Hosmer-Lemeshow
-test and create Hosmer-Lemeshow plot in **R** and **Stata**. Eventually we will
+test and create Hosmer-Lemeshow plot. Eventually we will
 compare the result to a likelihood based approach like AIC and explain the
-potential limitations with the HL test.
+potential limitations with the HL test. We will provide step-by-step procedures
+in both **R** and **Stata**.
 
 ## Logistic Regression Model
 
@@ -73,7 +75,8 @@ Logistic regression is a statistical model that in its basic form uses a
 logistic function to model a binary response variable. In our example, the
 response variable will be whether the customer churn or not. Let's denote the
 response variable to have value 0 or 1 in our case.
-The logistic model predicts $P(Y=1) = \frac{1}{1+exp(\beta'x)}$, so $P(Y=0) = \frac{exp(\beta'x)}{1+exp(\beta'x)}$.
+The logistic model predicts $P(Y=1) = \frac{1}{1+exp(\beta'x)}$, 
+so $P(Y=0) =\frac{exp(\beta'x)}{1+exp(\beta'x)}$.
 
 ## Hosmer-Lemeshow Test
 
@@ -118,9 +121,6 @@ the bank or not.
 
 * `Exited`: The response variable indicated whether the customer churn or not. 1
 means customer exited and 0 means retained.
-
-
-
 
 # Data Visualization
 
@@ -305,9 +305,29 @@ model and coincides with the AIC approach.
 
 The logistic regression performed in R and Stata yield the same result. Hosmer and Lemeshow goodness of fit also give the same result. This is what we expected as we used exactly the same model though different software.
 
-# Timeline
+# Conclusion
 
-* Add more example and compare different models (Nov 20)
+The logistic regression performed in R and Stata yield the same result. Hosmer 
+and Lemeshow goodness of fit gives same $\chi^2$ statistics. However, the
+p-values calculated from R and Stata are different. Although both results
+suggest well fitted models, the p-value calculated from Stata seems to be 
+larger than that calculated from R. The possible explaination for this
+disparity is that the degree of freedom for HL test in both softwares are 
+different, also for Stata we are using imported sources, the correctness of
+the calculation is not guaranteed.  
+
+We may also perceive some downside of the HL test when we walk through the
+core examples. It only tells us the goodness of fit of the
+logistic model but doesn't provide any constructive suggestions to optimize it.
+Also, as discussed on [HL test vs. AIC for logistic regression](https://stats.stackexchange.com/questions/18750/hosmer-lemeshow-vs-aic-for-logistic-regression), 
+
+> HL test requires arbitrary binning of predicted
+probabilities and does not possess excellent power to detect lack of
+calibration. It also does not fully penalize for extreme overfitting of the
+model.
+
+Hence, when considering model calibration for logistic models, it's better to 
+consider HL-test as a supplementary technique along with other methods. 
 
 
 
