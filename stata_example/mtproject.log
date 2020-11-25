@@ -1,156 +1,27 @@
-----------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
       name:  <unnamed>
        log:  /Users/yanhans/Documents/GitHub/Stats506_group/Stata_example/mtproject.log
   log type:  text
- opened on:  25 Nov 2020, 09:58:42
+ opened on:  25 Nov 2020, 11:49:08
 
 . 
 end of do-file
 
-. do "/var/folders/mn/f5ms8m0j1g521clck63zsyp40000gn/T//SD93567.000000"
-
-. // install packages to help performing hl test
-. net from https://www.sealedenvelope.com/
-----------------------------------------------------------------------------------------------------------------------
-https://www.sealedenvelope.com/
-Programs from Sealed Envelope Ltd
-----------------------------------------------------------------------------------------------------------------------
-
-These programs are provided by Sealed Envelope Ltd.
-For more details on their use visit www.sealedenvelope.com
-
-PACKAGES you could -net describe-:
-    hl                Hosmer-Lemeshow goodness of fit test
-    mlogplot2         Extension to mlogplot to handle two-way interaction terms in mlogit
-    reformat          Reformat regression output
-    rescale           Rescale categorical variables using numbers found in value labels
-    time              Convert strings in HH:MM:SS format to elapsed times and back again
-    xcount            Count longitudinal data
-    xfill             Fill in static variables in longitudinal data
-    xtab              Tabulate longitudinal data
-----------------------------------------------------------------------------------------------------------------------
-
-. net describe hl
-
-----------------------------------------------------------------------------------------------------------------------
-package hl from https://www.sealedenvelope.com
-----------------------------------------------------------------------------------------------------------------------
-
-TITLE
-      Hosmer-Lemeshow goodness of fit test
-
-DESCRIPTION/AUTHOR(S)
-      Calculate the Hosmer-Lemeshow C or H goodness of fit statistics for
-      binary outcomes after logistic or probit regression or using external
-      predictions. Optionally produce calibration plots.
-      
-      Author: Gareth Ambler, UCL.
-      Distribution-Date: 25oct2012
-
-INSTALLATION FILES                                   (type net install hl)
-      stata/hl.ado
-      stata/hl.hlp
-----------------------------------------------------------------------------------------------------------------------
-
-. net install hl
-checking hl consistency and verifying not already installed...
-all files already exist and are up to date.
-
-. 
-end of do-file
-
-. use "/Users/yanhans/Documents/GitHub/Stats506_group/Stata_example/churn_data.dta"
-
-. do "/var/folders/mn/f5ms8m0j1g521clck63zsyp40000gn/T//SD93567.000000"
-
-. import delimited ../data/Churn_Modelling_Cleaned.csv
-no; data in memory would be lost
-r(4);
-
-end of do-file
-
-r(4);
-
-. clear
-
-. do "/var/folders/mn/f5ms8m0j1g521clck63zsyp40000gn/T//SD93567.000000"
-
-. import delimited ../data/Churn_Modelling_Cleaned.csv
-(11 vars, 10,000 obs)
-
-. 
-end of do-file
-
-. do "/var/folders/mn/f5ms8m0j1g521clck63zsyp40000gn/T//SD93567.000000"
-
-. summarize
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
- creditscore |     10,000    650.5288     96.6533        350        850
-   geography |          0
-      gender |          0
-         age |     10,000     38.9218    10.48781         18         92
-      tenure |     10,000      5.0128    2.892174          0         10
--------------+---------------------------------------------------------
-     balance |     10,000    76485.89    62397.41          0   250898.1
-numofprodu~s |     10,000      1.5302    .5816544          1          4
-   hascrcard |     10,000       .7055    .4558405          0          1
-isactiveme~r |     10,000       .5151    .4997969          0          1
-estimateds~y |     10,000    100090.2    57510.49      11.58   199992.5
--------------+---------------------------------------------------------
-      exited |     10,000       .2037    .4027686          0          1
-
-. 
-end of do-file
-
-. summarize
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
--------------+---------------------------------------------------------
- creditscore |     10,000    650.5288     96.6533        350        850
-   geography |          0
-      gender |          0
-         age |     10,000     38.9218    10.48781         18         92
-      tenure |     10,000      5.0128    2.892174          0         10
--------------+---------------------------------------------------------
-     balance |     10,000    76485.89    62397.41          0   250898.1
-numofprodu~s |     10,000      1.5302    .5816544          1          4
-   hascrcard |     10,000       .7055    .4558405          0          1
-isactiveme~r |     10,000       .5151    .4997969          0          1
-estimateds~y |     10,000    100090.2    57510.49      11.58   199992.5
--------------+---------------------------------------------------------
-      exited |     10,000       .2037    .4027686          0          1
-
-. do "/var/folders/mn/f5ms8m0j1g521clck63zsyp40000gn/T//SD93567.000000"
-
-. save churn_data.dta, replace
-file churn_data.dta saved
-
-. 
-end of do-file
-
-. do "/var/folders/mn/f5ms8m0j1g521clck63zsyp40000gn/T//SD93567.000000"
-
-. clear
-
-. 
-end of do-file
-
-. do "/var/folders/mn/f5ms8m0j1g521clck63zsyp40000gn/T//SD93567.000000"
+. do "/var/folders/mn/f5ms8m0j1g521clck63zsyp40000gn/T//SD95648.000000"
 
 . use churn_data
 
 . 
 end of do-file
 
-. do "/var/folders/mn/f5ms8m0j1g521clck63zsyp40000gn/T//SD93567.000000"
+. do "/var/folders/mn/f5ms8m0j1g521clck63zsyp40000gn/T//SD95648.000000"
 
 . encode geography, gen(geo)
 
 . encode gender, gen(sex)
 
-. logit exited creditscore i.geo i.sex age tenure balance numofproducts i.hascrcard i.isactivemember estimatedsalary
+. logit exited creditscore i.geo i.sex age tenure balance numofproducts i.hascrcard i.isactivemember
+>  estimatedsalary
 
 Iteration 0:   log likelihood = -5054.8913  
 Iteration 1:   log likelihood =  -4331.648  
@@ -187,9 +58,8 @@ Log likelihood = -4280.6777                     Pseudo R2         =     0.1532
 . 
 end of do-file
 
-. do "/var/folders/mn/f5ms8m0j1g521clck63zsyp40000gn/T//SD93567.000000"
+. do "/var/folders/mn/f5ms8m0j1g521clck63zsyp40000gn/T//SD95648.000000"
 
-. // perform an initial HL-test and generate HL plot
 . predict p_exited
 (option pr assumed; Pr(exited))
 
@@ -215,7 +85,7 @@ end of do-file
 . 
 end of do-file
 
-. do "/var/folders/mn/f5ms8m0j1g521clck63zsyp40000gn/T//SD93567.000000"
+. do "/var/folders/mn/f5ms8m0j1g521clck63zsyp40000gn/T//SD95648.000000"
 
 . estat ic
 
@@ -228,12 +98,8 @@ Akaike's information criterion and Bayesian information criterion
 -----------------------------------------------------------------------------
                Note: N=Obs used in calculating BIC; see [R] BIC note.
 
-. 
-end of do-file
-
-. do "/var/folders/mn/f5ms8m0j1g521clck63zsyp40000gn/T//SD93567.000000"
-
-. logit exited creditscore i.geo i.sex age tenure balance numofproducts i.isactivemember estimatedsalary
+. logit exited creditscore i.geo i.sex age tenure balance numofproducts i.isactivemember estimatedsa
+> lary
 
 Iteration 0:   log likelihood = -5054.8913  
 Iteration 1:   log likelihood = -4331.8642  
@@ -276,11 +142,6 @@ Akaike's information criterion and Bayesian information criterion
            . |     10,000 -5054.891   -4280.96      11    8583.921   8663.234
 -----------------------------------------------------------------------------
                Note: N=Obs used in calculating BIC; see [R] BIC note.
-
-. 
-end of do-file
-
-. do "/var/folders/mn/f5ms8m0j1g521clck63zsyp40000gn/T//SD93567.000000"
 
 . logit exited creditscore i.geo i.sex age tenure balance numofproducts i.isactivemember
 
@@ -328,8 +189,9 @@ Akaike's information criterion and Bayesian information criterion
 . 
 end of do-file
 
-. do "/var/folders/mn/f5ms8m0j1g521clck63zsyp40000gn/T//SD93567.000000"
+. do "/var/folders/mn/f5ms8m0j1g521clck63zsyp40000gn/T//SD95648.000000"
 
+. // HL test and calibration plot for new model
 . predict np_exited
 (option pr assumed; Pr(exited))
 
@@ -355,59 +217,11 @@ end of do-file
 . 
 end of do-file
 
-. do "/var/folders/mn/f5ms8m0j1g521clck63zsyp40000gn/T//SD93567.000000"
+. do "/var/folders/mn/f5ms8m0j1g521clck63zsyp40000gn/T//SD95648.000000"
 
-. predict np_exited
-variable np_exited already defined
-r(110);
-
-end of do-file
-
-r(110);
-
-. do "/var/folders/mn/f5ms8m0j1g521clck63zsyp40000gn/T//SD93567.000000"
-
-. logit exited i.geo i.sex age tenure  numofproducts i.hascrcard i.isactivemember
-
-Iteration 0:   log likelihood = -5054.8913  
-Iteration 1:   log likelihood = -4345.6609  
-Iteration 2:   log likelihood = -4297.4455  
-Iteration 3:   log likelihood =  -4297.291  
-Iteration 4:   log likelihood =  -4297.291  
-
-Logistic regression                             Number of obs     =     10,000
-                                                LR chi2(8)        =    1515.20
-                                                Prob > chi2       =     0.0000
-Log likelihood =  -4297.291                     Pseudo R2         =     0.1499
-
-----------------------------------------------------------------------------------
-          exited |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
------------------+----------------------------------------------------------------
-             geo |
-        Germany  |   .9155013    .062202    14.72   0.000     .7935875    1.037415
-          Spain  |   .0336919     .07044     0.48   0.632     -.104368    .1717518
-                 |
-             sex |
-           Male  |  -.5194436   .0543434    -9.56   0.000    -.6259546   -.4129325
-             age |   .0724064    .002569    28.18   0.000     .0673712    .0774416
-          tenure |  -.0156638   .0093341    -1.68   0.093    -.0339584    .0026307
-   numofproducts |  -.1674469   .0456337    -3.67   0.000    -.2568873   -.0780065
-     1.hascrcard |  -.0494851   .0592231    -0.84   0.403    -.1655602    .0665901
-1.isactivemember |  -1.076774   .0575737   -18.70   0.000    -1.189617   -.9639318
-           _cons |  -3.492484   .1485067   -23.52   0.000    -3.783552   -3.201416
-----------------------------------------------------------------------------------
-
-. estat ic
-
-Akaike's information criterion and Bayesian information criterion
-
------------------------------------------------------------------------------
-       Model |        Obs  ll(null)  ll(model)      df         AIC        BIC
--------------+---------------------------------------------------------------
-           . |     10,000 -5054.891  -4297.291       9    8612.582   8677.475
------------------------------------------------------------------------------
-               Note: N=Obs used in calculating BIC; see [R] BIC note.
-
-. 
-end of do-file
-
+. log close
+      name:  <unnamed>
+       log:  /Users/yanhans/Documents/GitHub/Stats506_group/Stata_example/mtproject.log
+  log type:  text
+ closed on:  25 Nov 2020, 11:54:42
+----------------------------------------------------------------------------------------------------

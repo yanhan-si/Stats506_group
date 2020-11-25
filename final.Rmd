@@ -132,7 +132,7 @@ In this tutorial, we are using R and STATA to show how Logistic Regression and H
 Software| Relevant Libraries
 ------------ | ------------------------------------------------------------
 R |  `tidyverse` (data manipulation), `jtools` (model summary), `ResourceSelection` (Hosmer-Lemeshow Goodness Of Fit test), `modEvA` (Hosmer-Lemeshow plot)
-STATA | `hl`
+STATA | `hl` (Hosmer-Lemeshow Goodness Of Fit test)
 
 # Data Visualization
 
