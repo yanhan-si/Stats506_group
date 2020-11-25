@@ -1,7 +1,7 @@
 # This script is used to process the raw dataset
 library(tidyverse)
 library(readr)
-path = "./data"
+path = "../data"
 file_name = sprintf('%s/Churn_Modelling.csv', path)
 out_file_name = sprintf('%s/Churn_Modelling_Cleaned.csv', path)
 data = read_csv(file_name)

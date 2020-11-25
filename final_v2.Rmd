@@ -253,14 +253,18 @@ hl1 = hoslem.test(model1$y, model1$fitted.values, g = 10)
 hl1
 ```
 
-We have a non-significant p-values for this full model, which means that we have no evidence that the model is fitting poorly.
+We have a non-significant p-values for this full model, which means that we have no evidence that the model is fitted poorly.
 
-The first two columns are the expected numbers of 0's and 1's. The last two columns are the observed numbers of retained and exited customers. We divided the points into ten groups.
 
 ```{r}
 cbind(hl1$expected, hl1$observed)
 ```
 
+The first two columns are the expected numbers of 0's and 1's for a given group. The last two columns are the observed numbers of retained and exited customers. We divided the points into ten groups.
+
+#### HT test for the reduced model
+
+We used the same number of groups in this HT test. The p-value indicates that there is no evidence that the model is poorly fitted.
 
 ```{r}
 # Hosmer-Lemeshow Goodness of Fit Test: ---------------------------------------

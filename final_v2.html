@@ -1279,8 +1279,7 @@ IsActiveMember1
 ## 
 ## data:  model1$y, model1$fitted.values
 ## X-squared = 15.222, df = 8, p-value = 0.05498</code></pre>
-<p>We have a non-significant p-values for this full model, which means that we have no evidence that the model is fitting poorly.</p>
-<p>The first two columns are the expected numbers of 0’s and 1’s. The last two columns are the observed numbers of retained and exited customers. We divided the points into ten groups.</p>
+<p>We have a non-significant p-values for this full model, which means that we have no evidence that the model is fitted poorly.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">cbind</span>(hl1<span class="op">$</span>expected, hl1<span class="op">$</span>observed)</span></code></pre></div>
 <pre><code>##                    yhat0     yhat1  y0  y1
 ## [0.0113,0.0471] 965.3959  34.60408 964  36
@@ -1293,6 +1292,11 @@ IsActiveMember1
 ## (0.243,0.315]   723.4961 276.50388 724 276
 ## (0.315,0.443]   625.7909 374.20910 585 415
 ## (0.443,0.931]   422.1669 577.83308 445 555</code></pre>
+<p>The first two columns are the expected numbers of 0’s and 1’s for a given group. The last two columns are the observed numbers of retained and exited customers. We divided the points into ten groups.</p>
+</div>
+<div id="ht-test-for-the-reduced-model" class="section level4">
+<h4>HT test for the reduced model</h4>
+<p>We used the same number of groups in this HT test. The p-value indicates that there is no evidence that the model is poorly fitted.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Hosmer-Lemeshow Goodness of Fit Test: ---------------------------------------</span></span>
 <span id="cb15-2"><a href="#cb15-2"></a>hl2 =<span class="st"> </span><span class="kw">hoslem.test</span>(model2<span class="op">$</span>y, model2<span class="op">$</span>fitted.values, <span class="dt">g =</span> <span class="dv">10</span>)</span>
 <span id="cb15-3"><a href="#cb15-3"></a>hl2</span></code></pre></div>
