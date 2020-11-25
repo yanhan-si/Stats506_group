@@ -503,7 +503,6 @@ summary {
 <li><a href="#r">R</a></li>
 <li><a href="#stata">Stata</a></li>
 </ul></li>
-<li><a href="#brief-summary">Brief Summary</a></li>
 <li><a href="#conclusion">Conclusion</a></li>
 <li><a href="#references">References</a></li>
 <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -563,9 +562,11 @@ pre { /* Scrollable code block */
 </div>
 <div id="hosmer-lemeshow-test" class="section level2">
 <h2>Hosmer-Lemeshow Test</h2>
-<p>The Hosmer-Lemeshow Test assesses whether or not the observed event rates match expected event rates in subgroups of the model population. The Hosmer–Lemeshow test statistic is given by:<br />
+<p>The Hosmer-Lemeshow test (HL test) is a goodness of fit test for logistic regression, especially for risk prediction models. Specificially, HL test assesses whether or not the observed event rates match expected event rates in subgroups of the model population. This test is only used for binary response varibales(exited or retained in this example).</p>
+<p>The Hosmer–Lemeshow test statistic is given by:<br />
 <span class="math display">\[H = \sum_{g=1}^{G}\frac{(O_{1g}-E_{1g})^2}{N_g\pi_g(1-\pi_g)}\]</span><br />
-, where <span class="math inline">\(O_{1g}\)</span>, <span class="math inline">\(E_{1g}\)</span>, <span class="math inline">\(O_{0g}\)</span>, <span class="math inline">\(E_{0g}\)</span>, <span class="math inline">\(N_g\)</span>, and <span class="math inline">\(π_g\)</span> denote the observed <span class="math inline">\(Y=1\)</span> events, expected <span class="math inline">\(Y=1\)</span> events, observed <span class="math inline">\(Y=0\)</span> events, expected <span class="math inline">\(Y=0\)</span> events, total observations, predicted risk for the <span class="math inline">\(g^{th}\)</span> risk decile group, and G is the number of groups. The test statistic asymptotically follows a <span class="math inline">\(\chi ^{2}\)</span> distribution with G − 2 degrees of freedom. For the HL test, the null hypothesis is that the observed and expected proportions are the same across subgroups, which indicates a good fit model.</p>
+where <span class="math inline">\(O_{1g}\)</span>, <span class="math inline">\(E_{1g}\)</span>, <span class="math inline">\(O_{0g}\)</span>, <span class="math inline">\(E_{0g}\)</span>, <span class="math inline">\(N_g\)</span>, and <span class="math inline">\(π_g\)</span> denote the observed <span class="math inline">\(Y=1\)</span> events, expected <span class="math inline">\(Y=1\)</span> events, observed <span class="math inline">\(Y=0\)</span> events, expected <span class="math inline">\(Y=0\)</span> events, total observations, predicted risk for the <span class="math inline">\(g^{th}\)</span> risk decile group, and G is the number of groups. The test statistic asymptotically follows a <span class="math inline">\(\chi ^{2}\)</span> distribution with G − 2 degrees of freedom.</p>
+<p>For the HL test, the null hypothesis is that the observed and expected proportions are the same across subgroups, which indicates a good fit model. Like most goodness of fit tests, small p-values indicate a poor fit.</p>
 </div>
 <div id="data-description" class="section level2">
 <h2>Data Description</h2>
@@ -661,7 +662,7 @@ pre { /* Scrollable code block */
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>data =<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Exited =</span> <span class="kw">as.factor</span>(Exited),</span>
 <span id="cb9-2"><a href="#cb9-2"></a>                       <span class="dt">HasCrCard =</span> <span class="kw">as.factor</span>(HasCrCard),</span>
 <span id="cb9-3"><a href="#cb9-3"></a>                       <span class="dt">IsActiveMember =</span> <span class="kw">as.factor</span>(IsActiveMember))</span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="co"># modeling: -------------------------------------------------------------------</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co"># modeling</span></span>
 <span id="cb9-5"><a href="#cb9-5"></a>model1 =<span class="st"> </span><span class="kw">glm</span>(Exited <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> data, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link=</span><span class="st">&quot;logit&quot;</span>))</span>
 <span id="cb9-6"><a href="#cb9-6"></a><span class="kw">summ</span>(model1)</span></code></pre></div>
 <table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -986,7 +987,7 @@ EstimatedSalary
 </tfoot>
 </table>
 <p>From this preliminary results, we can see that <code>IsActiveMember</code> has a significant negative coefficient. This indicated that being an active member reduced the probability of churn. The coefficients for <code>CreditScore</code>, <code>Balance</code> and <code>EstimatedSalary</code> are very close to zero, which is consistent with our previous results from the exploratory data analysis. There is no significant difference in terms of <code>CreditScore</code>, <code>Balance</code> and <code>EstimatedSalary</code> between exited and retained customers.</p>
-<p>We performed backward elimination to reduce the complexity of the model. We first removed <code>CreditScore</code>, <code>Balance</code>and <code>EstimatedSalary</code> from the model and refit the model.</p>
+<p>We performed backward elimination to reduce the complexity of the model. We first removed <code>CreditScore</code>, <code>Balance</code>and <code>EstimatedSalary</code> from the model and refitted the model.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>model2 =<span class="st"> </span><span class="kw">glm</span>(Exited <span class="op">~</span><span class="st"> </span>Geography <span class="op">+</span><span class="st"> </span>Gender <span class="op">+</span><span class="st"> </span>Age <span class="op">+</span><span class="st"> </span>Tenure <span class="op">+</span><span class="st"> </span></span>
 <span id="cb10-2"><a href="#cb10-2"></a><span class="st">               </span>NumOfProducts <span class="op">+</span><span class="st"> </span>HasCrCard <span class="op">+</span><span class="st"> </span>IsActiveMember, </span>
 <span id="cb10-3"><a href="#cb10-3"></a>             <span class="dt">data =</span> data, </span>
@@ -1262,13 +1263,57 @@ IsActiveMember1
 </tr>
 </tfoot>
 </table>
+<p>When comparing BIC of model 1 with that of model 2, we noticed BIC of the reduced model is greater than that of the full model by 6.</p>
+</div>
+<div id="hosmer-lemeshow-goodness-of-fit-test" class="section level3">
+<h3>Hosmer-Lemeshow Goodness of Fit Test</h3>
+<p>When performing the HT test, we need to choose the number of groups g. In practice, Hosmer and Lemeshow’s conclusions from simulations are based on using g &gt; p + 1, where p is the number of covariates in the model. However, there is very little guidance on how to determine g. In this example, we specify g to be 10 for both models. One can easily notice that a small value of g gives us less opportunity to detect mis-specification while a large value of g will cause fragmentary subgroups.</p>
+<div id="ht-test-for-the-full-model" class="section level4">
+<h4>HT test for the full model</h4>
+<p>To perform Hosmer-Lemeshow test in R, we call the <code>hoslem.test</code> function from the <code>ResourceSelection</code> library.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Hosmer-Lemeshow Goodness of Fit Test: ---------------------------------------</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="kw">hoslem.test</span>(model1<span class="op">$</span>y, model1<span class="op">$</span>fitted.values, <span class="dt">g =</span> <span class="dv">10</span>)</span></code></pre></div>
+<span id="cb11-2"><a href="#cb11-2"></a>hl1 =<span class="st"> </span><span class="kw">hoslem.test</span>(model1<span class="op">$</span>y, model1<span class="op">$</span>fitted.values, <span class="dt">g =</span> <span class="dv">10</span>)</span>
+<span id="cb11-3"><a href="#cb11-3"></a>hl1</span></code></pre></div>
 <pre><code>## 
 ##  Hosmer and Lemeshow goodness of fit (GOF) test
 ## 
 ## data:  model1$y, model1$fitted.values
 ## X-squared = 15.222, df = 8, p-value = 0.05498</code></pre>
+<p>We have a non-significant p-values for this full model, which means that we have no evidence that the model is fitting poorly.</p>
+<p>The first two columns are the expected numbers of 0’s and 1’s. The last two columns are the observed numbers of retained and exited customers. We divided the points into ten groups.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">cbind</span>(hl1<span class="op">$</span>expected, hl1<span class="op">$</span>observed)</span></code></pre></div>
+<pre><code>##                    yhat0     yhat1  y0  y1
+## [0.0113,0.0471] 965.3959  34.60408 964  36
+## (0.0471,0.0695] 941.4907  58.50932 938  62
+## (0.0695,0.0939] 918.7260  81.27397 924  76
+## (0.0939,0.122]  892.0266 107.97336 893 107
+## (0.122,0.153]   862.5575 137.44254 883 117
+## (0.153,0.193]   827.5657 172.43425 814 186
+## (0.193,0.243]   783.7836 216.21640 793 207
+## (0.243,0.315]   723.4961 276.50388 724 276
+## (0.315,0.443]   625.7909 374.20910 585 415
+## (0.443,0.931]   422.1669 577.83308 445 555</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Hosmer-Lemeshow Goodness of Fit Test: ---------------------------------------</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a>hl2 =<span class="st"> </span><span class="kw">hoslem.test</span>(model2<span class="op">$</span>y, model2<span class="op">$</span>fitted.values, <span class="dt">g =</span> <span class="dv">10</span>)</span>
+<span id="cb15-3"><a href="#cb15-3"></a>hl2</span></code></pre></div>
+<pre><code>## 
+##  Hosmer and Lemeshow goodness of fit (GOF) test
+## 
+## data:  model2$y, model2$fitted.values
+## X-squared = 15.162, df = 8, p-value = 0.05608</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">cbind</span>(hl2<span class="op">$</span>expected, hl2<span class="op">$</span>observed)</span></code></pre></div>
+<pre><code>##                    yhat0     yhat1  y0  y1
+## [0.0137,0.0492] 963.6688  36.33116 962  38
+## (0.0492,0.0711] 940.2151  59.78494 929  71
+## (0.0711,0.0954] 917.2417  82.75829 933  67
+## (0.0954,0.123]  890.4286 109.57143 890 110
+## (0.123,0.155]   861.2177 138.78228 872 128
+## (0.155,0.192]   827.4249 172.57513 837 163
+## (0.192,0.243]   785.1376 216.86243 770 232
+## (0.243,0.313]   724.3259 274.67409 744 255
+## (0.313,0.443]   628.5733 370.42672 596 403
+## (0.443,0.936]   424.7665 575.23352 430 570</code></pre>
+</div>
 </div>
 </div>
 <div id="stata" class="section level2">
@@ -1328,10 +1373,6 @@ encode gender, gen(sex)</code></pre>
 </div>
 </div>
 </div>
-<div id="brief-summary" class="section level1">
-<h1>Brief Summary</h1>
-<p>The logistic regression performed in R and Stata yield the same result. Hosmer and Lemeshow goodness of fit also give the same result. This is what we expected as we used exactly the same model though different software.</p>
-</div>
 <div id="conclusion" class="section level1">
 <h1>Conclusion</h1>
 <p>The logistic regression performed in R and Stata yield the same result. Hosmer and Lemeshow goodness of fit gives same <span class="math inline">\(\chi^2\)</span> statistics. However, the p-values calculated from R and Stata are different. Although both results suggest well fitted models, the p-value calculated from Stata seems to be larger than that calculated from R. The possible explaination for this disparity is that the degree of freedom for HL test in both softwares are different, also for Stata we are using imported sources, the correctness of the calculation is not guaranteed.</p>
@@ -1350,7 +1391,7 @@ encode gender, gen(sex)</code></pre>
 </div>
 <div id="acknowledgments" class="section level1">
 <h1>Acknowledgments</h1>
-<p>We thank EunSeon Ahn and Erin Susan Cikanek for helpful and constructive feedback.</p>
+<p>We thank Dr.James Henderson, Yichao Chen, EunSeon Ahn and Erin Susan Cikanek for helpful and constructive instruction and feedback.</p>
 </div>
 
 
