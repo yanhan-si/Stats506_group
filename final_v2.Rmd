@@ -304,6 +304,10 @@ clear
 We first load in the data and use `summarize` to produce an overview of the
 data
 
+```
+summarize
+```
+
 ![](./fig/data_overview.PNG)  
 
 ### Fitting logistic model
@@ -337,6 +341,11 @@ command `hl exited p_exited, plot` to obtain the test result and calibration
 plot. Note that the `, plot` command is optional.
 Below is the result of the HL test and calibration plot.  
 
+```
+predict p_exited
+hl exited p_exited, plot
+```
+
 ![](./fig/hl_test.PNG)  
 
 ![](./fig/hl_plot.PNG).   
@@ -352,14 +361,29 @@ method to do variable selection. Then we will construct an optimized model and
 compare the HL test result with the previous result. The `estat ic` command
 helps us to find the AIC for the model. The AIC for our current model is 
 8585.355.  
+
+```
+estat ic
+```
 ![](./fig/aic1.PNG).  
 
 Then we eliminate HasCrCard, which has the highest p-value. The AIC for the new
 model is 8583.921.   
+
+```
+logit exited creditscore i.geo i.sex age tenure balance numofproducts i.isactivemember estimatedsalary
+estat ic
+```
 ![](./fig/aic2.PNG)  
 
 Proceed this procedure, we eliminate EstimatedSalary and the resulting AIC is 
 8582.953.   
+
+
+```
+logit exited creditscore i.geo i.sex age tenure balance numofproducts i.isactivemember
+estat ic
+```
 
 ![](./fig/aic3.PNG)  
 
@@ -368,6 +392,12 @@ performing HL test and calibration plot again.
 
 ### HL test and calibration plot for new model
 We will first present the result.   
+
+```
+predict np_exited
+hl exited p_exited, plot
+```
+
 ![](./fig/new_hltest.PNG)  
 
 ![](./fig/new_hlplot.PNG)  
