@@ -1,5 +1,5 @@
 ---
-title: "Stats 506 Midterm Project: Hosmer-Lemeshow Model Calibration"
+title: "Hosmer-Lemeshow Model Calibration"
 author: "Hao He, Yanhan Si"
 date: "`r format.Date(Sys.Date(), '%B %d, %Y')`"
 output: 
@@ -53,7 +53,7 @@ pre { /* Scrollable code block */
 }
 ```
 
-```{r setup, include=TRUE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -125,13 +125,21 @@ the bank or not.
 * `Exited`: The response variable indicated whether the customer churn or not. 1
 means customer exited and 0 means retained.
 
+## Software/Tools
+
+In this tutorial, we are using R and STATA to show how Logistic Regression and Hosmer-Lemeshow Test could be implemented. 
+
+Software| Relevant Libraries
+------------ | ------------------------------------------------------------
+R |  `tidyverse` (data manipulation), `jtools` (model summary), `ResourceSelection` (Hosmer-Lemeshow Goodness Of Fit test), `modEvA` (Hosmer-Lemeshow plot)
+STATA | `hl`
+
 # Data Visualization
 
 ```{r message=FALSE, warning=FALSE}
 
 library(tidyverse)
 library(jtools) # For printing model summary
-library(ggplot2)
 library(ResourceSelection) # For Hosmer-Lemeshow Goodness Of Fit test
 library(modEvA) # For Hosmer-Lemeshow plot
 
@@ -269,10 +277,12 @@ We have a non-significant p-values for this full model, which means that we have
 cbind(hl1$expected, hl1$observed)
 ```
 
-The first two columns are the expected numbers of 0's and 1's for a given group. The last two columns are the observed numbers of retained and exited customers. We divided the points into ten groups.
+The first two columns are the expected numbers of 0's and 1's for a given group. The last two columns are the observed numbers of retained and exited customers. We divided the points into ten groups. To better visulize the HL test results, we use the `HLfit` function from the `modEvA` package. The first argument of `HL` is a model object of class "glm". The `bin.method` argument should be specified from these options, "round.prob" "prob.bins",  "size.bins" , "n.bins" and "quantiles". The number of groups can be specified via `n.bins`. The default vaule is 10.
 
 ```{r}
-HLfit(model1, bin.method = "quantiles");
+HLfit(model = model1, bin.method = "quantiles",
+      n.bins = 10,
+      main = "Figure 5. HL GOF with quantile bins (n=10)")
 ```
 
 
@@ -286,12 +296,11 @@ hl2 = hoslem.test(model3$y, model3$fitted.values, g = 10)
 hl2
 ```
 
-```{r}
-cbind(hl2$expected, hl2$observed)
-```
 
 ```{r}
-HLfit(model3, bin.method = "quantiles");
+HLfit(model = model3, bin.method = "quantiles",
+      n.bins = 10,
+      main = "Figure 6. HL GOF with quantile bins (n=10)")
 ```
 
 ## Stata 
