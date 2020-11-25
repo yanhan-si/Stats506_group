@@ -125,31 +125,46 @@ means customer exited and 0 means retained.
 # Data Visualization
 
 ```{r message=FALSE, warning=FALSE}
-library(knitr)
+
 library(tidyverse)
+library(jtools) # print model summary
 library(ggplot2)
-library(readr)
 library(ResourceSelection)
 
 path = "./data"
 file_name = sprintf('%s/Churn_Modelling_Cleaned.csv', path)
-data = read_csv(file_name)
+data = read.csv(file_name)
 
 data = data %>% mutate(Exited = as.factor(Exited),
                        HasCrCard = as.factor(HasCrCard),
                        IsActiveMember = as.factor(IsActiveMember))
 ```
 
-* Figure 1 shows the distribution of credit scores stratified by the response variable `Exited` status. There is no vast difference between these two groups in terms of the credit scores distribution.
+* Figure 1 shows the distributions of credit score and estimated salary stratified by the response variable `Exited` status. There is no vast difference between these two groups in terms of the credit scores distribution and estimated salary.
 
 ```{r}
 data %>% 
   ggplot(aes( CreditScore, color = Exited )) + 
   geom_density() + 
-  ggtitle("Figure.1 The distribution of credit score by exited") +
+  ggtitle("Figure.1.1 The distribution of credit score by exited") +
   theme_bw()
 ```
 
+```{r}
+data %>% 
+  ggplot(aes( EstimatedSalary, color = Exited )) + 
+  geom_density() + 
+  ggtitle("Figure.1.2 The distribution of estimated salary by exited") +
+  theme_bw()
+```
+
+```{r}
+data %>% 
+  ggplot(aes( Balance, color = Exited )) + 
+  geom_density() + 
+  ggtitle("Figure.1.3 The distribution of balance by exited") +
+  theme_bw()
+```
 
 * Figure 2 indicates that exited customers have a higher mean age than those retained. There is no significant difference in gender between the exited and retained groups.
 
@@ -189,16 +204,36 @@ data %>%
 
 ## R 
 
-In this model fitting part, we will use logistic regression to predict the p
+In this model fitting part, we will fit a logistic regression to the bank churn dataset. 
 
 ### Setup
+
+We started with a full model with all the predictors. 
+
 ```{r  paged.print=TRUE}
 data = data %>% mutate(Exited = as.factor(Exited),
                        HasCrCard = as.factor(HasCrCard),
                        IsActiveMember = as.factor(IsActiveMember))
 # modeling: -------------------------------------------------------------------
 model1 = glm(Exited ~ ., data = data, family = binomial(link="logit"))
-summary(model1)
+summ(model1)
+```
+
+From this preliminary results, we can see that `IsActiveMember` has a significant negative coefficient. This indicated that being an active member reduced the probability of churn. The coefficients for `CreditScore`, `Balance` and `EstimatedSalary` are very close to zero, which is consistent with our previous results from the exploratory data analysis. There is no significant difference in terms of `CreditScore`, `Balance` and `EstimatedSalary` between exited and retained customers.
+
+We performed backward elimination to reduce the complexity of the model. We first removed `CreditScore`, `Balance`and  `EstimatedSalary` from the model and refit the model.
+
+
+```{r}
+model2 = glm(Exited ~ Geography + Gender + Age + Tenure + 
+               NumOfProducts + HasCrCard + IsActiveMember, 
+             data = data, 
+             family = binomial(link="logit"))
+summ(model2)
+```
+
+
+```{r}
 # Hosmer-Lemeshow Goodness of Fit Test: ---------------------------------------
 hoslem.test(model1$y, model1$fitted.values, g = 10)
 ```
@@ -334,6 +369,8 @@ consider HL-test as a supplementary technique along with other methods.
 # References
 [Logistic Model](https://en.wikipedia.org/wiki/Logistic_regression)  
 [Hosmer-Lemeshow Test](https://en.wikipedia.org/wiki/Hosmer%E2%80%93Lemeshow_test#Pearson_chi-squared_goodness_of_fit_test)
+
+[STATS 506 Project 2018](https://jbhender.github.io/Stats506/F18/GP/Group5.html)
 
 Some of the html format code was adopted from the source code of the project of group 2 (EunSeon Ahn et al.) 
 
