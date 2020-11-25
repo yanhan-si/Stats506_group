@@ -130,9 +130,10 @@ means customer exited and 0 means retained.
 ```{r message=FALSE, warning=FALSE}
 
 library(tidyverse)
-library(jtools) # print model summary
+library(jtools) # For printing model summary
 library(ggplot2)
-library(ResourceSelection)
+library(ResourceSelection) # For Hosmer-Lemeshow Goodness Of Fit test
+library(modEvA) # For Hosmer-Lemeshow plot
 
 path = "./data"
 file_name = sprintf('%s/Churn_Modelling_Cleaned.csv', path)
@@ -244,7 +245,7 @@ summ(model3)
 ```
 
 
-When applying the Akaike information criterion (AIC), we noticed that AIC(8582.95) of the third model is lower than that(8585.36) of the full model by about 3. Bayesian information criterion (BIC) also favors model 3, the small model.
+When applying the Akaike information criterion (AIC), we noticed that AIC(8582.95) of the third model is lower than that(8585.36) of the full model by about 3. Bayesian information criterion (BIC) also favors model 3, the smaller model.
 
 ### Hosmer-Lemeshow Goodness of Fit Test
 
@@ -270,13 +271,18 @@ cbind(hl1$expected, hl1$observed)
 
 The first two columns are the expected numbers of 0's and 1's for a given group. The last two columns are the observed numbers of retained and exited customers. We divided the points into ten groups.
 
+```{r}
+HLfit(model1, bin.method = "quantiles");
+```
+
+
 #### HT test for the reduced model
 
 We used the same number of groups in this HT test. The p-value indicates that there is no evidence that the model is poorly fitted.
 
 ```{r}
 # Hosmer-Lemeshow Goodness of Fit Test: ---------------------------------------
-hl2 = hoslem.test(model2$y, model2$fitted.values, g = 10)
+hl2 = hoslem.test(model3$y, model3$fitted.values, g = 10)
 hl2
 ```
 
@@ -284,6 +290,9 @@ hl2
 cbind(hl2$expected, hl2$observed)
 ```
 
+```{r}
+HLfit(model3, bin.method = "quantiles");
+```
 
 ## Stata 
 
