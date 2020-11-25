@@ -31,6 +31,13 @@
 ## Relation between files
 
 The final tutorial can be viewd in final.html. For repreducing the 
-tutorial, run final.rmd. The stata scripts for stata example are included
-in stata_example folder. Figures for both R and Stata are located under fig
+tutorial, run final.rmd. 
+
+The R scripts for R example are included
+in R_example folder. [Code](./R_example)
+
+The stata scripts for stata example are included
+in Stata_example folder. [Code](./Stata_example)
+
+Figures for both R and Stata are located under fig
 folder. Data and processed data are located in data folder.
