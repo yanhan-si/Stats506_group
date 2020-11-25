@@ -530,7 +530,7 @@ pre { /* Scrollable code block */
 <code>HasCrCard</code>: Binary Flag for whether the customer holds a credit card with the bank or not.<br />
 <code>IsActiveMember</code>: Binary Flag for whether the customer is an active member with the bank or not.<br />
 <code>EstimatedSalary</code>: Estimated salary of the customer in Dollars.<br />
-<code>Exited</code>: The response variable indicated whether the customer churn or not. 1 means customer exited and 0 means retained.</p>
+<code>Exited</code>: The response variable indicating whether the customer churn or not. 1 means customer exited and 0 means retained.</p>
 </div>
 </div>
 <div id="data-visualization" class="section level1">
@@ -646,7 +646,7 @@ clear</code></pre>
 </div>
 <div id="fitting-logistic-model" class="section level3">
 <h3>Fitting logistic model</h3>
-<p>Before we fit an logistic model, we must notice that stata doesn’t know how to handle string variables for regression. One way to solve this is to use <code>encode</code> command. In our case, we use it to convert variables geography and gender.</p>
+<p>Before we fit an logistic model, we must notice that Stata doesn’t know how to handle string variables for regression. One way to solve this is to use <code>encode</code> command. In our case, we use it to convert variables geography and gender.</p>
 <pre><code>use churn_data
 encode geography, gen(geo)
 encode gender, gen(sex)</code></pre>
@@ -685,7 +685,10 @@ encode gender, gen(sex)</code></pre>
 <div id="conclusion" class="section level1">
 <h1>Conclusion</h1>
 <p>The logistic regression performed in R and Stata yield the same result. Hosmer and Lemeshow goodness of fit gives same <span class="math inline">\(\chi^2\)</span> statistics. However, the p-values calculated from R and Stata are different. Although both results suggest well fitted models, the p-value calculated from Stata seems to be larger than that calculated from R. The possible explaination for this disparity is that the degree of freedom for HL test in both softwares are different, also for Stata we are using imported sources, the correctness of the calculation is not guaranteed.</p>
-<p>We may also perceive some downside of the HL test when we walk through the core examples. Unlike likelihood based method, HL test doesn’t provide any directions for model selection. It only tells us the goodness of fit of the logistic model but doesn’t provide any constructive suggestion to optimize it.</p>
+<p>We may also perceive some downside of the HL test when we walk through the core examples. It only tells us the goodness of fit of the logistic model but doesn’t provide any constructive suggestions to optimize it. Also, as discussed on <a href="https://stats.stackexchange.com/questions/18750/hosmer-lemeshow-vs-aic-for-logistic-regression">HL test vs. AIC for logistic regression</a>,</p>
+<blockquote>
+<p>HL test requires arbitrary binning of predicted probabilities and does not possess excellent power to detect lack of calibration. It also does not fully penalize for extreme overfitting of the model.</p>
+</blockquote>
 </div>
 <div id="references" class="section level1">
 <h1>References</h1>

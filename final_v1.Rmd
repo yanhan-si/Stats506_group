@@ -114,7 +114,7 @@ bank or not.
 `IsActiveMember`: Binary Flag for whether the customer is an active member with
 the bank or not.  
 `EstimatedSalary`: Estimated salary of the customer in Dollars.  
-`Exited`: The response variable indicated whether the customer churn or not. 1
+`Exited`: The response variable indicating whether the customer churn or not. 1
 means customer exited and 0 means retained.
 
 # Data Visualization
@@ -211,7 +211,7 @@ data
 ![](./fig/data_overview.PNG)  
 
 ### Fitting logistic model
-Before we fit an logistic model, we must notice that stata doesn't know how to 
+Before we fit an logistic model, we must notice that Stata doesn't know how to 
 handle string variables for regression. One way to solve this is to use `encode`
 command. In our case, we use it to convert variables geography and gender.  
 ```
@@ -291,9 +291,19 @@ different, also for Stata we are using imported sources, the correctness of
 the calculation is not guaranteed.  
 
 We may also perceive some downside of the HL test when we walk through the
-core examples. Unlike likelihood based method, HL test doesn't provide any 
-directions for model selection. It only tells us the goodness of fit of the
-logistic model but doesn't provide any constructive suggestion to optimize it.
+core examples. It only tells us the goodness of fit of the
+logistic model but doesn't provide any constructive suggestions to optimize it.
+Also, as discussed on [HL test vs. AIC for logistic regression](https://stats.stackexchange.com/questions/18750/hosmer-lemeshow-vs-aic-for-logistic-regression), 
+
+> HL test requires arbitrary binning of predicted
+probabilities and does not possess excellent power to detect lack of
+calibration. It also does not fully penalize for extreme overfitting of the
+model.
+
+Hence, when considering model calibration for logistic models, it's better to 
+consider HL-test as a supplementary technique along with other methods. 
+
+
 
 
 
