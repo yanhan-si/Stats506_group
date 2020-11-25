@@ -222,21 +222,29 @@ model1 = glm(Exited ~ ., data = data, family = binomial(link="logit"))
 summ(model1)
 ```
 
-From this preliminary results, we can see that `IsActiveMember` has a significant negative coefficient. This indicated that being an active member reduced the probability of churn. The coefficients for `CreditScore`, `Balance` and `EstimatedSalary` are very close to zero, which is consistent with our previous results from the exploratory data analysis. There is no significant difference in terms of `CreditScore`, `Balance` and `EstimatedSalary` between exited and retained customers.
-
-We performed backward elimination to reduce the complexity of the model. We first removed `CreditScore`, `Balance`and  `EstimatedSalary` from the model and refitted the model.
-
+From this preliminary results, we can see that `IsActiveMember` has a significant negative coefficient. This indicated that being an active member reduced the probability of churn. The coefficients for `CreditScore`, `Balance` and `EstimatedSalary` are very close to zero, which is consistent with our previous results from the exploratory data analysis. There is no significant difference in terms of `CreditScore`, `Balance` and `EstimatedSalary` between exited and retained customers. `HasCrCard` has a large p-value. In our backward elimination,  we first removed `HasCrCard` from the model and refitted the model.
 
 ```{r}
-model2 = glm(Exited ~ Geography + Gender + Age + Tenure + 
-               NumOfProducts + HasCrCard + IsActiveMember, 
+model2 = glm(Exited ~ CreditScore + Geography + Gender + Age + Tenure + 
+               Balance + NumOfProducts + IsActiveMember + EstimatedSalary, 
              data = data, 
              family = binomial(link="logit"))
 summ(model2)
 ```
 
 
-When comparing BIC of model 1 with that of model 2, we noticed BIC of the reduced model is greater than that of the full model by 6.
+In model 2, we noticed that `EstimatedSalary` is not significant. So we eliminate `EstimatedSalary` from model 2. Below are the results of the reduced model.
+
+```{r}
+model3 = glm(Exited ~ CreditScore + Geography + Gender + Age + Tenure + 
+               Balance + NumOfProducts + IsActiveMember, 
+             data = data, 
+             family = binomial(link="logit"))
+summ(model3)
+```
+
+
+When applying the Akaike information criterion (AIC), we noticed that AIC(8582.95) of the third model is lower than that(8585.36) of the full model by about 3. Bayesian information criterion (BIC) also favors model 3, the small model.
 
 ### Hosmer-Lemeshow Goodness of Fit Test
 

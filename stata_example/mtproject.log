@@ -365,3 +365,49 @@ end of do-file
 
 r(110);
 
+. do "/var/folders/mn/f5ms8m0j1g521clck63zsyp40000gn/T//SD93567.000000"
+
+. logit exited i.geo i.sex age tenure  numofproducts i.hascrcard i.isactivemember
+
+Iteration 0:   log likelihood = -5054.8913  
+Iteration 1:   log likelihood = -4345.6609  
+Iteration 2:   log likelihood = -4297.4455  
+Iteration 3:   log likelihood =  -4297.291  
+Iteration 4:   log likelihood =  -4297.291  
+
+Logistic regression                             Number of obs     =     10,000
+                                                LR chi2(8)        =    1515.20
+                                                Prob > chi2       =     0.0000
+Log likelihood =  -4297.291                     Pseudo R2         =     0.1499
+
+----------------------------------------------------------------------------------
+          exited |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-----------------+----------------------------------------------------------------
+             geo |
+        Germany  |   .9155013    .062202    14.72   0.000     .7935875    1.037415
+          Spain  |   .0336919     .07044     0.48   0.632     -.104368    .1717518
+                 |
+             sex |
+           Male  |  -.5194436   .0543434    -9.56   0.000    -.6259546   -.4129325
+             age |   .0724064    .002569    28.18   0.000     .0673712    .0774416
+          tenure |  -.0156638   .0093341    -1.68   0.093    -.0339584    .0026307
+   numofproducts |  -.1674469   .0456337    -3.67   0.000    -.2568873   -.0780065
+     1.hascrcard |  -.0494851   .0592231    -0.84   0.403    -.1655602    .0665901
+1.isactivemember |  -1.076774   .0575737   -18.70   0.000    -1.189617   -.9639318
+           _cons |  -3.492484   .1485067   -23.52   0.000    -3.783552   -3.201416
+----------------------------------------------------------------------------------
+
+. estat ic
+
+Akaike's information criterion and Bayesian information criterion
+
+-----------------------------------------------------------------------------
+       Model |        Obs  ll(null)  ll(model)      df         AIC        BIC
+-------------+---------------------------------------------------------------
+           . |     10,000 -5054.891  -4297.291       9    8612.582   8677.475
+-----------------------------------------------------------------------------
+               Note: N=Obs used in calculating BIC; see [R] BIC note.
+
+. 
+end of do-file
+
